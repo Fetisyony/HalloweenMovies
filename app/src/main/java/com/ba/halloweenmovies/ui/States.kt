@@ -6,7 +6,7 @@ import com.ba.halloweenmovies.data.repository.FetchError
 
 
 data class ErrorStatus(
-    val seen: Boolean,  // whether an alert was already shown to the user
+    val seen: Boolean,  // whether the user have seen the alert or not
     val fetchError: FetchError
 )
 

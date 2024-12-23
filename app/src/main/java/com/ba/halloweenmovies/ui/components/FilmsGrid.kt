@@ -7,13 +7,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -35,7 +34,7 @@ fun isHighTimeToLoadNew(lastVisibleItemIndex: Int?, screenState: ScreenState): B
     val loadNewWhenLeftUntilBottom = 5
 
     return lastVisibleItemIndex != null &&
-            screenState.currentState != CurrentState.Loading &&
+            screenState.currentState == CurrentState.Still &&
             lastVisibleItemIndex >= screenState.items.size - loadNewWhenLeftUntilBottom &&
             screenState.errorStatus.fetchError == FetchError.Ok
 }
@@ -43,7 +42,9 @@ fun isHighTimeToLoadNew(lastVisibleItemIndex: Int?, screenState: ScreenState): B
 @Composable
 fun FilmGrid(
     screenState: ScreenState,
-    onLoadMore: () -> Unit
+    onLoadMore: () -> Unit,
+    onAddToFavourites: (Int) -> Unit,
+    isFavourite: (Int) -> Boolean
 ) {
     val listState = rememberSaveable(saver = LazyGridState.Saver) {
         LazyGridState()
@@ -67,25 +68,29 @@ fun FilmGrid(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 45.dp)
-            .padding(horizontal = 25.dp),
+            .padding(top = 4.dp)
+            .padding(horizontal = 16.dp),
     ) {
         items(screenState.items) { film ->
             ElevatedCard(
-                elevation = CardDefaults.elevatedCardElevation(10.dp),
+                shape = RoundedCornerShape(8.dp),
+                elevation = CardDefaults.elevatedCardElevation(0.dp),
                 colors = CardColors(
                     containerColor = Color.White,
                     contentColor = Color.White,
                     disabledContainerColor = Color.White,
                     disabledContentColor = Color.White,
-                )
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(322.dp)
             ) {
-                FilmCard(film)
+                FilmCardContent(film, onAddToFavourites, { isFavourite(film.id) })
             }
         }
 
         if (screenState.currentState == CurrentState.Loading) {
-            item {
+            item(span = { GridItemSpan(maxLineSpan) }) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -99,8 +104,13 @@ fun FilmGrid(
         }
 
         if (screenState.errorStatus.fetchError != FetchError.Ok && screenState.items.isNotEmpty()) {
-            item {
-                Box(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
                     RetryButton(onLoadMore)
                 }
             }

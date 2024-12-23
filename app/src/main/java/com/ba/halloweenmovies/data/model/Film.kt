@@ -7,5 +7,4 @@ data class Film(
     val rating: Float,
     val year: Int,
     val posterUrl: String,
-    var isFavourite: Boolean = false
 )

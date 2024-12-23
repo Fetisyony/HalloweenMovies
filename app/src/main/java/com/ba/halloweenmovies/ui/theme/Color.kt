@@ -12,3 +12,13 @@ val Pink40 = Color(0xFF7D5260)
 
 val CustomLightGray = Color(0xFFE7E7E7)
 val ErrorScreenColor = Color(0xFF767676)
+
+val MainBackgroundColor = Color(0xFFEFEFEF)
+val FilmYearText = Color(0x63000000)
+
+val PumpkinColor = Color(0xFFF27503)
+val GreenRateColor = Color(0xFF378319)
+val RedRateColor = Color(0xFFBE152A)
+val GrayRateColor = Color(0xFF676767)
+
+val SecondaryGrayColor = Color(0xFF373A40)

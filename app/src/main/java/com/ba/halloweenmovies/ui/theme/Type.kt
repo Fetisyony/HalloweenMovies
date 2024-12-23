@@ -1,10 +1,37 @@
 package com.ba.halloweenmovies.ui.theme
 
 import androidx.compose.material3.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.ba.halloweenmovies.R
+
+
+val filmTitleStyle = TextStyle(
+    fontFamily = FontFamily(Font(R.font.inter_regular), Font(R.font.inter_italic)),
+    fontWeight = FontWeight.Bold,
+    fontSize = 20.sp,
+    color = Color.Black
+)
+
+val filmYearStyle = TextStyle(
+    fontFamily = FontFamily(Font(R.font.inter_regular), Font(R.font.inter_italic)),
+    fontWeight = FontWeight.Normal,
+    fontSize = 15.sp,
+    color = FilmYearText
+)
+
+val filmRatingStyle = TextStyle(
+    fontFamily = FontFamily(Font(R.font.inter_regular), Font(R.font.inter_italic)),
+    fontWeight = FontWeight.Bold,
+    fontSize = 14.sp,
+    color = Color.White
+)
+
+
 
 // Set of Material typography styles to start with
 val typography = Typography(

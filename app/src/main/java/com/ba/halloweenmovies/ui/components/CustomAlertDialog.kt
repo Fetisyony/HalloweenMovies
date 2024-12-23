@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import com.ba.halloweenmovies.ui.theme.typography
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.Text
@@ -23,6 +22,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.ba.halloweenmovies.R
 import com.ba.halloweenmovies.ui.theme.ErrorScreenColor
+import com.ba.halloweenmovies.ui.theme.typography
+
 
 @Composable
 fun DialogCustomCard(content: @Composable (ColumnScope.() -> Unit)) {
@@ -50,30 +51,30 @@ fun CustomAlertDialog(
     onConfirm: () -> Unit,
     onDismiss: (() -> Unit)? = null
 ) {
-        Dialog(
-            onDismissRequest = { onDismiss?.invoke() },
-            properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
-        ) {
-            DialogCustomCard {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = title,
-                        style = typography.titleMedium,
-                        modifier = Modifier.padding(bottom = 8.dp)
-                    )
-                    Text(text = message, fontSize = 16.sp)
-                    Spacer(modifier = Modifier.height(5.dp))
+    Dialog(
+        onDismissRequest = { onDismiss?.invoke() },
+        properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
+    ) {
+        DialogCustomCard {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = title,
+                    style = typography.titleMedium,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                Text(text = message, fontSize = 16.sp)
+                Spacer(modifier = Modifier.height(5.dp))
 
-                    Row(
-                        horizontalArrangement = Arrangement.End,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        ErrorButton(text = confirmButtonText) { onConfirm() }
-                    }
+                Row(
+                    horizontalArrangement = Arrangement.End,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    ErrorButton(text = confirmButtonText) { onConfirm() }
                 }
             }
         }
+    }
 }

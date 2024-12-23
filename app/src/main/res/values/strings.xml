@@ -3,10 +3,25 @@
     <string name="retry">Retry</string>
     <string name="fetch_error_message_ok">OK</string>
     <string name="fetch_error_message_network">An error occurred while loading.\nPlease check your internet connection.</string>
-    <string name="fetch_error_message_no_data_left">You have reached the end of the feed</string>
+    <string name="fetch_error_message_no_data_left">No data</string>
     <string name="fetch_error_message_unexpected">Unexpected error while loading</string>
     <string name="error_loading_image_cd">Error loading</string>
     <string name="image_description_main_list">Jason</string>
     <string name="default_dialog_title_notification">Notification</string>
     <string name="dialog_confirm_button_default_text">OK</string>
+    <string name="popular_route">popular</string>
+    <string name="favourites_route">favourites</string>
+    <string name="profile_route">profile</string>
+    <string name="films">Популярные</string>
+    <string name="favourites">Избранное</string>
+    <string name="profile">Профиль</string>
+    <string name="search">Поиск</string>
+    <string name="pumpkin_logo">Logo in shape of a pumpkin</string>
+    <string name="search_icon">Search Icon</string>
+    <string name="query_argument">query</string>
+    <string name="back_icon">arrow back icon</string>
+    <string name="add_bookmark_description">Add Bookmark description</string>
+    <string name="film_rating_description">Film rating badge</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="profile_picture_placeholder">Profile picture placeholder for case when the picture was not loaded</string>
 </resources>
