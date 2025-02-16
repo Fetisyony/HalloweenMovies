@@ -2,6 +2,7 @@ package com.ba.halloweenmovies.ui.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ba.halloweenmovies.data.model.Film
 import com.ba.halloweenmovies.data.repository.FetchError
 import com.ba.halloweenmovies.data.repository.FilmsRepository
 import com.ba.halloweenmovies.data.repository.FilmsRequestResult
@@ -15,8 +16,7 @@ import kotlinx.coroutines.launch
 
 
 abstract class BaseFilmListViewModel<T>(
-    protected val films: FilmsRepository,
-    private val requestString: String? = null
+    protected val films: FilmsRepository, private val requestString: String? = null
 ) : ViewModel() {
     private val _screenState = MutableStateFlow(ScreenState())
     val screenState = _screenState.asStateFlow()
@@ -68,13 +68,6 @@ abstract class BaseFilmListViewModel<T>(
                         newFilms.fetchError
                     )
                 }
-
-                is FilmsRequestResult.Empty -> {
-                    updatedErrorStatus = ErrorStatus(
-                        updatedErrorStatus.fetchError == FetchError.NoDataLeftError,
-                        FetchError.NoDataLeftError
-                    )
-                }
             }
 
             _screenState.update { oldValue ->
@@ -87,9 +80,9 @@ abstract class BaseFilmListViewModel<T>(
         }
     }
 
-    fun isFavourite(filmId: Int): Boolean = films.isFavourite(filmId)
-
     fun toggleFavourite(filmId: Int) {
-        films.toggleFavourite(filmId)
+        viewModelScope.launch {
+            films.toggleFavourite(filmId)
+        }
     }
 }

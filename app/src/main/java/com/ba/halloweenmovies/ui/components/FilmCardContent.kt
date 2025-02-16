@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,6 +53,7 @@ import com.ba.halloweenmovies.ui.theme.RedRateColor
 import com.ba.halloweenmovies.ui.theme.filmRatingStyle
 import com.ba.halloweenmovies.ui.theme.filmTitleStyle
 import com.ba.halloweenmovies.ui.theme.filmYearStyle
+import kotlinx.coroutines.launch
 
 
 fun getRatingColor(rating: Float): Color {
@@ -63,7 +65,7 @@ fun getRatingColor(rating: Float): Color {
 }
 
 @Composable
-fun FilmCardContent(film: Film, onAddToFavourites: (Int) -> Unit, isFavourite: () -> Boolean) {
+fun FilmCardContent(film: Film, onAddToFavourites: (Int) -> Unit) {
     val context = LocalContext.current
 
     val decoderFactory = if (SDK_INT >= 28) AnimatedImageDecoder.Factory() else GifDecoder.Factory()
@@ -81,7 +83,7 @@ fun FilmCardContent(film: Film, onAddToFavourites: (Int) -> Unit, isFavourite: (
             .build()
     }
 
-    var isFilmFavourite by remember { mutableStateOf(isFavourite()) }
+    var isFilmFavourite by remember { mutableStateOf(film.isFavourite) }
 
     Column {
         Box(
@@ -130,6 +132,14 @@ fun FilmCardContent(film: Film, onAddToFavourites: (Int) -> Unit, isFavourite: (
                     onClick = {
                         onAddToFavourites(film.id)
                         isFilmFavourite = true
+                    },
+                    modifier = Modifier.align(Alignment.TopEnd)
+                )
+            } else {
+                RemoveFromFavouritesIcon(
+                    onClick = {
+                        onAddToFavourites(film.id)
+                        isFilmFavourite = false
                     },
                     modifier = Modifier.align(Alignment.TopEnd)
                 )
@@ -199,6 +209,40 @@ fun AddToFavouritesIcon(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    Card(
+        modifier = modifier
+            .padding(4.dp)
+            .size(34.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(PumpkinColor)
+            .clickable {
+                coroutineScope.launch {
+                    onClick()
+                }
+            },
+        shape = RoundedCornerShape(8.dp),
+    ) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Icon(
+                painter = painterResource(id = R.drawable.bookmark_add),
+                contentDescription = stringResource(R.string.add_bookmark_description),
+                tint = Color.Black,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(PumpkinColor)
+                    .padding(5.dp)
+            )
+        }
+    }
+}
+
+
+@Composable
+fun RemoveFromFavouritesIcon(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Card(
         modifier = modifier
             .padding(4.dp)
@@ -210,7 +254,7 @@ fun AddToFavouritesIcon(
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Icon(
-                painter = painterResource(id = R.drawable.bookmark_add),
+                painter = painterResource(id = R.drawable.outline_bookmark_remove_24),
                 contentDescription = stringResource(R.string.add_bookmark_description),
                 tint = Color.Black,
                 modifier = Modifier

@@ -23,6 +23,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.ba.halloweenmovies.ui.screens.Screen
 import com.ba.halloweenmovies.ui.screens.getTitle
 import com.ba.halloweenmovies.ui.theme.SecondaryGrayColor
+import com.ba.halloweenmovies.ui.theme.SelectedSecondaryColor
 
 
 @Composable
@@ -42,21 +43,27 @@ fun BottomNavigationBar(navController: NavHostController) {
         val currentRoute = navBackStackEntry?.destination?.route
 
         items.forEach { screen ->
-            BottomNavigationItem(icon = {
-                Icon(
-                    modifier = Modifier.size(24.dp),
-                    imageVector = ImageVector.vectorResource(id = screen.iconId),
-                    tint = SecondaryGrayColor,
-                    contentDescription = screen.getTitle(LocalContext.current),
-                )
-            }, label = {
-                Spacer(modifier = Modifier.height(10.dp))
-                Text(
-                    text = screen.getTitle(LocalContext.current),
-                    fontSize = 12.sp,
-                    color = SecondaryGrayColor
-                )
-            }, selected = currentRoute == screen.route, onClick = {
+            val isSelected = currentRoute == screen.route
+
+            BottomNavigationItem(
+                icon = {
+                    Icon(
+                        modifier = Modifier.size(24.dp),
+                        imageVector = ImageVector.vectorResource(id = screen.iconId),
+                        tint = if (isSelected) SelectedSecondaryColor else SecondaryGrayColor,
+                        contentDescription = screen.getTitle(LocalContext.current),
+                    )
+                },
+                label = {
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(
+                        text = screen.getTitle(LocalContext.current),
+                        fontSize = 12.sp,
+                        color = if (isSelected) SelectedSecondaryColor else SecondaryGrayColor
+                    )
+                },
+                selected = currentRoute == screen.route,
+                onClick = {
                     navController.navigate(screen.route) {
                         navController.graph.startDestinationRoute?.let { route ->
                             popUpTo(route) {
@@ -66,7 +73,8 @@ fun BottomNavigationBar(navController: NavHostController) {
                         launchSingleTop = true
                         restoreState = true
                     }
-                }
+                },
+                selectedContentColor = Color.Blue
             )
         }
     }

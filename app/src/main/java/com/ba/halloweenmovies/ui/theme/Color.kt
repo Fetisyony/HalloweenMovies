@@ -10,7 +10,6 @@ val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
-val CustomLightGray = Color(0xFFE7E7E7)
 val ErrorScreenColor = Color(0xFF767676)
 
 val MainBackgroundColor = Color(0xFFEFEFEF)
@@ -22,3 +21,4 @@ val RedRateColor = Color(0xFFBE152A)
 val GrayRateColor = Color(0xFF676767)
 
 val SecondaryGrayColor = Color(0xFF373A40)
+val SelectedSecondaryColor = PumpkinColor

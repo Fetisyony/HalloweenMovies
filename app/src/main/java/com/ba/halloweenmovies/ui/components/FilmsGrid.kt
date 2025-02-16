@@ -43,8 +43,7 @@ fun isHighTimeToLoadNew(lastVisibleItemIndex: Int?, screenState: ScreenState): B
 fun FilmGrid(
     screenState: ScreenState,
     onLoadMore: () -> Unit,
-    onAddToFavourites: (Int) -> Unit,
-    isFavourite: (Int) -> Boolean
+    onToggleFavourites: (Int) -> Unit,
 ) {
     val listState = rememberSaveable(saver = LazyGridState.Saver) {
         LazyGridState()
@@ -85,7 +84,7 @@ fun FilmGrid(
                     .fillMaxWidth()
                     .height(322.dp)
             ) {
-                FilmCardContent(film, onAddToFavourites, { isFavourite(film.id) })
+                FilmCardContent(film, onToggleFavourites)
             }
         }
 

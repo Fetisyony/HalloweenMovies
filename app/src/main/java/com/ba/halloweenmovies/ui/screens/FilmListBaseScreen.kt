@@ -4,6 +4,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.ui.platform.LocalContext
 import com.ba.halloweenmovies.data.model.Film
@@ -38,7 +39,6 @@ fun FilmListScreen(
                 viewModel.fetchItems()
             },
             { id -> viewModel.toggleFavourite(id) },
-            { id -> viewModel.isFavourite(id) }
         )
 
         if (screenState.value.errorStatus.fetchError != FetchError.Ok) {
